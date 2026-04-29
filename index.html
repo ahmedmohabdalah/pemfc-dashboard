@@ -15,17 +15,25 @@
   <p>Last update: <span id="timestamp">--</span></p>
 
   <script>
-    fetch("data.json")
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("voltage").textContent = data.voltage;
-        document.getElementById("current").textContent = data.current;
-        document.getElementById("power").textContent = data.power;
-        document.getElementById("temperature").textContent = data.temperature;
-        document.getElementById("h2_flow").textContent = data.h2_flow;
-        document.getElementById("h2_pressure").textContent = data.h2_pressure;
-        document.getElementById("timestamp").textContent = data.timestamp;
-      });
+    function updateDashboard() {
+      fetch("data.json?t=" + new Date().getTime())
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("voltage").textContent = data.voltage;
+          document.getElementById("current").textContent = data.current;
+          document.getElementById("power").textContent = data.power;
+          document.getElementById("temperature").textContent = data.temperature;
+          document.getElementById("h2_flow").textContent = data.h2_flow;
+          document.getElementById("h2_pressure").textContent = data.h2_pressure;
+          document.getElementById("timestamp").textContent = data.timestamp;
+        })
+        .catch(error => {
+          console.error("Update failed:", error);
+        });
+    }
+
+    updateDashboard();              // initial load
+    setInterval(updateDashboard, 5000);  // update every 5 seconds
   </script>
 </body>
 </html>
