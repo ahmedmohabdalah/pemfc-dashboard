@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PEMFC Dashboard</title>
+</head>
+<body>
+  <h1>PEMFC Live Dashboard</h1>
+
+  <p>Voltage: <span id="voltage">--</span> V</p>
+  <p>Current: <span id="current">--</span> A</p>
+  <p>Power: <span id="power">--</span> W</p>
+  <p>Temperature: <span id="temperature">--</span> °C</p>
+  <p>H₂ Flow: <span id="h2_flow">--</span> SLPM</p>
+  <p>H₂ Pressure: <span id="h2_pressure">--</span> bar</p>
+  <p>Last update: <span id="timestamp">--</span></p>
+
+  <script>
+    fetch("data.json")
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("voltage").textContent = data.voltage;
+        document.getElementById("current").textContent = data.current;
+        document.getElementById("power").textContent = data.power;
+        document.getElementById("temperature").textContent = data.temperature;
+        document.getElementById("h2_flow").textContent = data.h2_flow;
+        document.getElementById("h2_pressure").textContent = data.h2_pressure;
+        document.getElementById("timestamp").textContent = data.timestamp;
+      });
+  </script>
+</body>
+</html>
